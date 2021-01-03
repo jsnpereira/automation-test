@@ -1,0 +1,7 @@
+.idea/*
+chromedriver
+geckodriver
+*.iml
+.reports/*
+target
+.DS_Store

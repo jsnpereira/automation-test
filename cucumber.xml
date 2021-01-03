@@ -1,0 +1,12 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="My Suite" verbose="2"  parallel="tests" thread-count="1">
+    <listeners>
+        <listener class-name="test.Listeners.CucumberListener"/>
+    </listeners>
+    <test name="Cucumber runners suite" parallel="none">
+        <classes>
+            <class name="test.Runners.CucumberRunner" />
+        </classes>
+    </test>
+</suite>
