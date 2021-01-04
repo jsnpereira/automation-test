@@ -6,7 +6,6 @@ import com.automation.framework.models.Topic;
 import com.automation.framework.selenium.base.DriveHelper;
 import com.automation.framework.utils.RegexUtil;
 import io.cucumber.java.en.And;
-import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -14,11 +13,6 @@ import org.openqa.selenium.WebElement;
 import java.util.*;
 
 public class Web01Steps {
-    @Given("Navegar o link {string}")
-    public void navegarOLink(String link) {
-        DriveHelper.launch(link);
-
-    }
 
     @And("Clicar Demo link")
     public void clicarDemoLink() throws NotSelectLocatorType {

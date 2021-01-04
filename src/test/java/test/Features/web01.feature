@@ -1,6 +1,6 @@
 Feature: Web 01
 
-  Scenario: Automatizar os fluxos definidos
+  Scenario: Automatizar o teste no site discourse
     Given Navegar o link "https://www.discourse.org/"
     And Clicar Demo link
     And Tab está aberta

@@ -29,7 +29,6 @@ public class CucumberRunner extends CucumberBase {
 
     @Test(groups = "Cucumber", dataProvider = "scenarios")
     public void test(PickleWrapper pickleWrapper, FeatureWrapper featureWrapper) {
-        String featureName = pickleWrapper.getPickle().getName();
         testNGCucumberRunner.runScenario(pickleWrapper.getPickle());
     }
 
