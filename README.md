@@ -3,7 +3,7 @@
 Create the automation test to make challenge for CESAR company. Our test will be execute the maven tool, we should be install the maven before it execute our tests.
 
 ## How install chromedrive in project
-Please, make download the chromedriver in site and put it into project, you can see pic below
+Please, make download the chromedriver in [site](https://chromedriver.chromium.org/downloads) and put it into project, you can see pic below.
 
 ![chromedriver](/images/chromedrive_project.png)
 
@@ -35,7 +35,7 @@ I leave three comments in steps because it broke the tests that page is loading 
 
 ![chromedriver](/images/Info_section_loading.png)
 
-You can see the loading in Info section, it means we not able to continue until show print in the .
+You can see the loading in Info section, it means we not able to continue steps until show print in the console .
 
 The steps are: 
  * Clicar o localização
