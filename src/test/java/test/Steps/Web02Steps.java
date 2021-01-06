@@ -8,9 +8,10 @@ import com.automation.framework.selenium.base.DriveHelper;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
-import java.util.List;
+import java.util.*;
 
 public class Web02Steps {
     private static int position;
@@ -28,7 +29,7 @@ public class Web02Steps {
     }
 
     @And("Clicar no botão pesquisa")
-    public void clicarNoBotãoPesquisa() throws NotSelectLocatorType, InterruptedException {
+    public void clicarNoBotãoPesquisa() throws NotSelectLocatorType{
         DriveHelper.click(".//button[contains(@class,'search-button')]", LocatorType.XPATH);
     }
 
@@ -90,7 +91,7 @@ public class Web02Steps {
 
     @And("Imprimir o nome do site da oferta")
     public void imprimirONomeDoSiteDaOferta() throws NotSelectLocatorType {
-        String locator = "("+itemHotelPositionLocator
+        String locator = "(" + itemHotelPositionLocator
                 .replace("XXX", String.valueOf(position))
                 + "//*[contains(@class,'accommodation-list__header')]//h3)[1]";
         String value = DriveHelper.getText(locator, LocatorType.XPATH);
@@ -98,11 +99,12 @@ public class Web02Steps {
     }
 
     @Then("Mostrar informação do hotel")
-    public void mostrarInformaçãoDoHotel() throws InterruptedException {
+    public void mostrarInformaçãoDoHotel()  {
         System.out.println("======================================");
         System.out.println("Dado do Hotel:");
-        System.out.println("Nome: "+hotel.getName()+" Estrelas: "+hotel.getStar());
-        System.out.println("Oferta da empresa: "+hotel.getCompanyOffer()+" Preço: "+hotel.getPrice());
+        System.out.println("Nome: " + hotel.getName() + " Estrelas: " + hotel.getStar());
+        System.out.println("Oferta da empresa: " + hotel.getCompanyOffer() + " Preço: " + hotel.getPrice());
+        printConvenienceList();
         System.out.println("======================================");
     }
 
@@ -111,30 +113,66 @@ public class Web02Steps {
         this.position = Integer.valueOf(position);
     }
 
-    @And("Clicar o link do hotel")
-    public void clicarOLinkDoHotel() throws NotSelectLocatorType, InterruptedException {
-        String locator1 = itemHotelPositionLocator
+    @And("Clicar o link para visualizar todas as comodidades")
+    public void clicarOLinkParaVisualizarTodasAsComodidades() throws NotSelectLocatorType {
+        String locator = itemHotelPositionLocator
                 .replace("XXX", String.valueOf(position))
-                + "//span[contains(@class,'item-link')]";
+                + "//div[@class='expand-amenities']";
+        DriveHelper.scrollToViewElement(locator, LocatorType.XPATH);
 
         String locator2 = itemHotelPositionLocator
                 .replace("XXX", String.valueOf(position))
-             //  + "//div[contains(@class,'slideouts-navigation')]";
-           + "//div[contains(@class,'dummy-loader info-loader')]";
-
-       DriveHelper.click(locator1, LocatorType.XPATH);
-       DriveHelper.waitElementPresented(locator2,LocatorType.XPATH);
-       DriveHelper.waitElementNotDisplayed(locator2, LocatorType.XPATH);
+                + "//*[@class='expaned']/div";
+        DriveHelper.waitElementPresented(locator2, LocatorType.XPATH);
     }
 
-    @And("Clicar o botão para visualizar todas as comodidades")
-    public void clicarOBotãoParaVisualizarTodasAsComodidades() throws NotSelectLocatorType {
+    @And("Imprimir as Comodidades do quarto")
+    public void imprimirAsComodidadesDoQuarto() throws NotSelectLocatorType {
+        List<WebElement> elements = DriveHelper
+                .getElementList(".//div[@class='sl-box__block clearfix']/div"
+                        , LocatorType.XPATH);
+        HashMap<String, List<String>> conveniences = new HashMap<>();
+
+        for (WebElement element : elements) {
+            String title = element.findElement(By.xpath(".//h5")).getText();
+
+            List<WebElement> eConveniences = element.findElements(By.xpath(".//ul/li"));
+            List<String> convenienceList = new ArrayList<>();
+            for (WebElement convenience : eConveniences) {
+                convenienceList.add(convenience.getText());
+            }
+            conveniences.put(title, convenienceList);
+        }
+        hotel.setConvenience(conveniences);
+    }
+
+    private void printConvenienceList() {
+      if(hotel.getConvenience() != null) {
+          System.out.println("Comodidades do quarto :");
+          Iterator iterator = hotel.getConvenience().entrySet().iterator();
+
+          while (iterator.hasNext()) {
+              Map.Entry convenience = (Map.Entry) iterator.next();
+              System.out.println("-" + convenience.getKey() + ":");
+              List<String> list = (List<String>) convenience.getValue();
+              for (String value : list) {
+                  System.out.println("    *" + value);
+              }
+          }
+      }
+    }
+
+    @And("Clicar o localização")
+    public void clicarOLocalização() throws NotSelectLocatorType {
         String locator = itemHotelPositionLocator
                 .replace("XXX", String.valueOf(position))
-                + "//*[contains(@class,'slideouts__amenities')]" +
-                "//button[contains(@class,'btn--icon-trailing slideouts__slideoutBtn')]";
+                + "//div[@class='item-link']";
+        DriveHelper.click(locator,LocatorType.XPATH);
 
-        DriveHelper.scrollToViewElement(locator, LocatorType.XPATH);
-
+        String locator2 = itemHotelPositionLocator
+                .replace("XXX", String.valueOf(position))
+                + "//div[contains(@class,'dummy-loader info-loader')]";
+        DriveHelper.waitElementPresented(locator2, LocatorType.XPATH);
+        DriveHelper.waitElementNotDisplayed(locator2, LocatorType.XPATH);
     }
 }

@@ -14,7 +14,8 @@ Feature: Web 02
     And Imprimir a quantidade de estrela
     And Imprimir o nome do site da oferta
     And Imprimir o valor do quarto
-    #And Clicar o link do hotel
-    #And Clicar o botão para visualizar todas as comodidades
+    #And Clicar o localização
+    #And Clicar o link para visualizar todas as comodidades
+    #And Imprimir as Comodidades do quarto
     Then Mostrar informação do hotel
 

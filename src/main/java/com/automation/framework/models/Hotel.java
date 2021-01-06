@@ -1,11 +1,14 @@
 package com.automation.framework.models;
 
+import java.util.HashMap;
+import java.util.List;
+
 public class Hotel {
     private String name;
     private int star;
     private String companyOffer;
     private String price;
-    private String room;
+    private HashMap<String, List<String>> convenience;
 
     public String getName() {
         return name;
@@ -39,11 +42,11 @@ public class Hotel {
         this.price = price;
     }
 
-    public String getRoom() {
-        return room;
+    public HashMap<String, List<String>> getConvenience() {
+        return convenience;
     }
 
-    public void setRoom(String room) {
-        this.room = room;
+    public void setConvenience(HashMap<String, List<String>> convenience) {
+        this.convenience = convenience;
     }
 }

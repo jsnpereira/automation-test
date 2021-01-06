@@ -99,7 +99,6 @@ public class Web01Steps {
                 topic.setViews(viewsNumber);
             }
         }
-
         System.out.println("===============================================");
         System.out.println("Tópico mais visualizado:");
         System.out.println("Topico: '"+topic.getTitle()+" - Visualizado: "+topic.getViews());
